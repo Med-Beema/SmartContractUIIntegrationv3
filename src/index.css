@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-item:hover,
+.nav-item:active,
+.nav-item.active,
+.active > .nav-item {
+  @apply text-mb-green;
+}
+.nav-item-getCovered::selection,
+.nav-item-getCovered:active,
+.nav-item-getCovered.active,
+.active > .nav-item-getCovered {
+  @apply text-mb-green;
+  @apply border-mb-green border-b-4 border-solid;
+  /* @apply underline; */
+}
+
+.form-control {
+  @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-mb-purple focus:ring-mb-purple;
+}
+.form-label {
+  @apply block text-sm font-medium text-mb-gray;
+}
+
+input[type="file"]::-webkit-file-upload-button,
+input[type="file"]::file-selector-button {
+  @apply text-white bg-gray-700 hover:bg-gray-600 font-medium text-sm cursor-pointer border-0 h-full border-none;
+  margin-inline-start: -1rem;
+  margin-inline-end: 1rem;
+}
