@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./claims.css";
 
 export default function Claims() {
@@ -17,9 +17,11 @@ export default function Claims() {
             <div className="text-xl text-[#3D3838] py-2 font-[550]">
               My Claims
             </div>
-            <button className="bg-mb-purple rounded-lg py-2.5 px-7 text-lg text-[white]">
-              File a Claim
-            </button>
+            <Link to="/FileClaim">
+              <button className="bg-mb-purple rounded-lg py-2.5 px-7 text-lg text-[white]">
+                File a Claim
+              </button>
+            </Link>
           </div>
           <div className="py-6">
             <table className="min-w-full">
