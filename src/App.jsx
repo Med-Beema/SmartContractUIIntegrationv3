@@ -12,7 +12,7 @@ function App() {
       {/* Routes */}
       <AppRoute />
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

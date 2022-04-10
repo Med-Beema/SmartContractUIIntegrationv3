@@ -69,8 +69,8 @@ function submitPolicyHolder(string memory _holderDetailsipfsHash) public {
 
 
 function depositCoverFees() public payable{
-    bytes memory detailsIpfs = bytes(holdersDetailsIpfsHash[msg.sender]);
-    require(detailsIpfs.length!=0 );
+   bytes memory detailsIpfs = bytes(holdersDetailsIpfsHash[msg.sender]);
+   require(detailsIpfs.length!=0 );
     require(msg.value == coverFees);
     approvedHolders[msg.sender]=true;
     
@@ -113,6 +113,10 @@ function votefor(uint256 _claimId) public isNotPolicyHolder(_claimId) investorBe
 
     }
 
+ function vote() public {
+     claimID++;
+     
+ }
 
 function voteAgainst(uint256 _claimId) public isNotPolicyHolder(_claimId) investorBeforeVotingPeriod(_claimId) isInvestor() HasNotvoted() {
     

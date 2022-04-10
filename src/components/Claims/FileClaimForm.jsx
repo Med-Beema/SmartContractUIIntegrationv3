@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import FormGroup from "../common/FormGroup";
 import axios from "axios";
+import { saveClaim } from "../../Controllers/claim";
+import Constants from "../../constants";
 import InsuranceSystem from '../../artifacts/contracts/InsuranceSystem.sol/InsuranceSystem.json'
 import {ethers} from 'ethers';
 
@@ -47,21 +49,22 @@ function FileClaimForm() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    e.stopPropagation();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
-     
+      e.preventDefault();
+      e.stopPropagation();
     } else {
+      e.preventDefault();
+      e.stopPropagation();
       console.log(values);
       axios
-        .post("http://localhost:5000/api/data", values)
+        .post(`${Constants.baseURL}/api/data`, values)
         .then((response) => {
-          console.log("inside promise");
           console.log(response);
           mapAddressToClaimHash(response.data.image)
-          
+          setIsSubmitted(true);
         })
+        .then(saveClaim(values))
         .catch((error) => {
           console.log(error);
         });
@@ -95,7 +98,6 @@ function FileClaimForm() {
    
  
    const insuranceContractAddress="0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
-   const contractAddress="";
    async function requestAccount() {
      await window.ethereum.request({ method: 'eth_requestAccounts' });
    }
@@ -109,15 +111,17 @@ function FileClaimForm() {
       const contract = new ethers.Contract(insuranceContractAddress, InsuranceSystem.abi, signer);
       const address = signer.getAddress();
       console.log("address: ", address);
+      console.log("Ipfshash", ipfsUrl);
       const transaction = await contract.submitClaim(ipfsUrl);
       await transaction.wait();
       console.log('Transaction : ', transaction);
       
-      ///////checking data 
-      console.log("checking:");
-      const readtransaction =  await contract.PolicyholdersClaimDetails(1);
-      console.log('ipfs hash:', readtransaction);
-      console.log('')
+      
+      // ///////checking data 
+       console.log("checking:");
+      // const readtransaction =  await contract.PolicyholdersClaimDetails(1);
+      // console.log('ipfs hash:', readtransaction);
+      // console.log('')
     }
   }
  ////////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +134,13 @@ function FileClaimForm() {
           encType="multipart/form-data"
           onSubmit={handleSubmit}
         >
-          <FormGroup labelName="Amount" name="amount" type="number" />
+          <FormGroup
+            labelName="Amount"
+            name="amount"
+            type="number"
+            handleChange={handleChange}
+            value={values.amount}
+          />
           <FormGroup
             labelName="Name of Institution"
             name="institutionName"

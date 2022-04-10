@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import img from "../.././MedBeema.ico";
+import image from "../.././MedBeema.ico";
+import { savePolicy } from "../../Controllers/policy";
 import InsuranceSystem from '../../artifacts/contracts/InsuranceSystem.sol/InsuranceSystem.json'
 import {ethers} from 'ethers';
 export default function CoverCard() {
+  const handleClick = () => {
+    depositCoverFees_Policy();
+    savePolicy();
+  };
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
   /**
@@ -42,14 +47,14 @@ export default function CoverCard() {
 
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////
-  return (
+   return (
     <div>
       <div className="mt-10 grid place-items-left bg-[#f9f9fe]">
-        <div class="w-[485px] h-[370px] rounded shadow-md shadow-[4px 4px 4px rgba(0, 0, 0, 0.25)] bg-[#ffffff]">
-          <div class="p-4">
+        <div className="w-[485px] h-[370px] rounded shadow-md shadow-[4px 4px 4px rgba(0, 0, 0, 0.25)] bg-[#ffffff]">
+          <div className="p-4">
             <div className="Heading flex flex-row">
               <div className="basis-1/4">
-                <img src={img}></img>
+                <img src={image} alt=""></img>
               </div>
               <div className="px-8 py-1 place-items-center fullName  font-[600] text-xl text-[#000000]">
                 <div className="font-[700] text-4xl text-black">
@@ -66,30 +71,35 @@ export default function CoverCard() {
                   Premium price
                 </div>
                 <div className="font-[400] text-sm text-[##000000] py-5">
-                  4.61%/year
+                  1 ETH
                 </div>
               </div>
               <div className="content2 basis-80 leading-9">
                 <div className="font-[500] text-sm text-[#7C7777]">
-                  My Cover
+                  Validity Period
                 </div>
                 <div className="font-[400] text-sm text-[##000000] py-5">
-                  0 ETH
+                  1 Year
                 </div>
               </div>
               <div className="content3 basis-80 leading-9">
                 <div className="font-[500] text-sm text-[#7C7777]">
-                  Rollover Date
+                  Valid Upto
                 </div>
                 <div className="font-[400] text-sm text-[##000000] py-5">
-                  3/6/2022
+                  {`${
+                    new Date().getFullYear() + 1
+                  }/${new Date().getMonth()}/${new Date().getDate()}`}
                 </div>
               </div>
             </div>
             <div className="pt-10 grid place-items-center">
               {" "}
-              <button className="bg-purple text-white rounded-lg py-2.5 px-7" onClick={depositCoverFees_Policy}>
-               Buy Cover
+              <button
+                className="bg-purple text-white rounded-lg py-2.5 px-7"
+                onClick={handleClick}
+              >
+                Buy Cover
               </button>
             </div>
           </div>

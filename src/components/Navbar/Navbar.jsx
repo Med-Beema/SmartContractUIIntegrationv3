@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useWallet } from "./../wallet/useWallet";
+import { setUserId } from "../../Controllers/user";
 
 function Navbar() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const { accounts, connectWallet, trimWalletAddress, walletConnected, disconnectWallet, network } = useWallet()
+  const handleClick = () => {
+    
+    setUserId(accounts);
+    walletConnected ? disconnectWallet() : connectWallet();
+    console.log(accounts)
+  };
 
   return (
     <div className=" bg-mb-black-100 text-white">
@@ -28,7 +35,7 @@ function Navbar() {
             </NavLink>
           </ul>
 
-          <button className="bg-mb-purple rounded-lg py-2.5 px-7" onClick={()=> walletConnected ? disconnectWallet() : connectWallet()}>
+          <button className="bg-mb-purple rounded-lg py-2.5 px-7" onClick={handleClick}>
             {walletConnected? trimWalletAddress(accounts):"Connect Wallet"}
           </button>
         </nav>
